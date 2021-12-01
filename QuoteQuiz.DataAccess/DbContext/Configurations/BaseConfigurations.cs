@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuoteQuiz.DataAccess.Entities;
 
-namespace QuoteQuiz.DataAccess.EntityFramework
+namespace QuoteQuiz.DataAccess.EntityFramework.Configurations
 {
     public class BaseObjectMap<TEntity, T> : IEntityTypeConfiguration<TEntity>
         where TEntity : BaseObject<T>

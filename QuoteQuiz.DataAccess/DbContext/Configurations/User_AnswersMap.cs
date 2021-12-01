@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuoteQuiz.DataAccess.Entities;
 using QuoteQuiz.DataAccess.EntityFramework;
 
-namespace Insurance.CoreAPI.Persistence.Configurations
+namespace QuoteQuiz.DataAccess.EntityFramework.Configurations
 {
     public class User_AnswersMap :  BaseObjectMap<User_Answers, int>
     {
