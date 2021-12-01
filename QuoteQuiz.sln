@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteQuiz", "QuoteQuiz\QuoteQuiz.csproj", "{191906B5-8725-4028-8C15-79439F639C49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuoteQuiz.Web", "QuoteQuiz\QuoteQuiz.Web.csproj", "{191906B5-8725-4028-8C15-79439F639C49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoteQuiz.DataAccess", "QuoteQuiz.DataAccess\QuoteQuiz.DataAccess.csproj", "{3E3D8DB0-8BA2-48B7-A119-312543CD53C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{191906B5-8725-4028-8C15-79439F639C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191906B5-8725-4028-8C15-79439F639C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191906B5-8725-4028-8C15-79439F639C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E3D8DB0-8BA2-48B7-A119-312543CD53C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E3D8DB0-8BA2-48B7-A119-312543CD53C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E3D8DB0-8BA2-48B7-A119-312543CD53C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E3D8DB0-8BA2-48B7-A119-312543CD53C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
