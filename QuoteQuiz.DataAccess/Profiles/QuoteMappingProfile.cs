@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using QuoteQuiz.DataAccess.Entities;
 using QuoteQuiz.DataAccess.Models;
 using QuoteQuiz.DataAccess.Models.Enums;
@@ -14,6 +13,19 @@ namespace QuoteQuiz.DataAccess.Profiles
         IMappingAction<List<Answers_Multiple>, List<MultiplePossibleAnswerViewModel>>
 
     {
+        public class QuoteMappingProfile : Profile
+        {
+            public QuoteMappingProfile()
+            {
+                CreateMap<List<Quotes>, List<QuoteViewModel>>()
+                    .AfterMap<QuoteMappingActions>();
+                CreateMap<Answers_Binary, QuoteBinaryViewModel>()
+                    .AfterMap<QuoteMappingActions>();
+                CreateMap<List<Answers_Multiple>, List<MultiplePossibleAnswerViewModel>>()
+                    .AfterMap<QuoteMappingActions>();
+            }
+        }
+
         public void Process(List<Quotes> source, List<QuoteViewModel> destination, ResolutionContext context)
         {
             foreach (var item in source)
@@ -51,19 +63,6 @@ namespace QuoteQuiz.DataAccess.Profiles
                 });
             }
         }
-
-        public class QuoteMappingProfile : Profile
-        {
-            public QuoteMappingProfile()
-            {
-                CreateMap<List<Quotes>, List<QuoteViewModel>>()
-                    .AfterMap<QuoteMappingActions>();
-                CreateMap<Answers_Binary, QuoteBinaryViewModel>()
-                    .AfterMap<QuoteMappingActions>();
-                CreateMap<List<Answers_Multiple>, List<MultiplePossibleAnswerViewModel>>()
-                    .AfterMap<QuoteMappingActions>();
-
-            }
-        }
+     
     }
 }

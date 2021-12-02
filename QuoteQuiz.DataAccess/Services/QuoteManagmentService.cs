@@ -74,14 +74,13 @@ namespace QuoteQuiz.DataAccess.Services
                 });
 
                 _quoteQuizDbContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
                 //_logger.LogCritical(ex.Message);
                 return false;
             }
-
-            return true;
         }
 
         public async Task<bool> UpdateQuoteBinary(UpdateQuoteBinaryModel Quote)
@@ -96,15 +95,13 @@ namespace QuoteQuiz.DataAccess.Services
                 result.Answers_Binary.CorrectAnswer = Quote.CorrectAnswer;
 
                 _quoteQuizDbContext.SaveChanges();
-
+                return true;
             }
             catch (Exception ex)
             {
                 //_logger.LogCritical(ex.Message);
                 return false;
             }
-
-            return true;
         }
 
         public async Task<bool> CreateQuoteMultiple(CreateQuoteMultipleModel Quote)
@@ -127,14 +124,13 @@ namespace QuoteQuiz.DataAccess.Services
                 });
 
                 _quoteQuizDbContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
                 //_logger.LogCritical(ex.Message);
                 return false;
             }
-
-            return true;
         }
 
         public async Task<bool> UpdateQuoteMultiple(UpdateQuoteMultipleModel Quote)
@@ -153,15 +149,13 @@ namespace QuoteQuiz.DataAccess.Services
                 }
 
                 _quoteQuizDbContext.SaveChanges();
-
+                return true;
             }
             catch (Exception ex)
             {
                 //_logger.LogCritical(ex.Message);
                 return false;
             }
-
-            return true;
         }
 
     }

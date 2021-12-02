@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using QuoteQuiz.DataAccess.Entities;
 using QuoteQuiz.DataAccess.Models;
 using QuoteQuiz.DataAccess.Models.Enums;
@@ -8,6 +7,18 @@ using System.Linq;
 
 namespace QuoteQuiz.DataAccess.Profiles
 {
+    public class UserMappingProfile : Profile
+    {
+        public UserMappingProfile()
+        {
+            CreateMap<List<Users>, List<UserViewModel>>()
+                .AfterMap<UserMappingActions>();
+            CreateMap<Users, UserViewModel>()
+                .AfterMap<UserMappingActions>();
+            CreateMap<List<User_Answers>, ReviewUserViewModel>()
+                .AfterMap<UserMappingActions>();
+        }
+    }
     public class UserMappingActions :
         IMappingAction<List<Users>, List<UserViewModel>>,
         IMappingAction<Users, UserViewModel>,
@@ -89,17 +100,5 @@ namespace QuoteQuiz.DataAccess.Profiles
                 destination.UserCorrectAnswerPercentage = totalCorrectAnswers / (decimal)destination.TotalUserAnsweredQuestions * 100;
         }
 
-        public class UserMappingProfile : Profile
-        {
-            public UserMappingProfile()
-            {
-                CreateMap<List<Users>, List<UserViewModel>>()
-                    .AfterMap<UserMappingActions>();
-                CreateMap<Users, UserViewModel>()
-                    .AfterMap<UserMappingActions>();
-                CreateMap<List<User_Answers>, ReviewUserViewModel>()
-                    .AfterMap<UserMappingActions>();
-            }
-        }
     }
 }

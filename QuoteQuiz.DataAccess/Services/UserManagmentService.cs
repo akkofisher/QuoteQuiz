@@ -52,16 +52,14 @@ namespace QuoteQuiz.DataAccess.Services
                     Name = user.Name,
                 });
 
-
                 _quoteQuizDbContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
                 //_logger.LogCritical(ex.Message);
                 return false;
             }
-
-            return true;
         }
 
         public async Task<bool> UpdateUser(UpdateUserModel user)
@@ -78,15 +76,13 @@ namespace QuoteQuiz.DataAccess.Services
                 result.Email = user.Email;
 
                 _quoteQuizDbContext.SaveChanges();
-
+                return true;
             }
             catch (Exception ex)
             {
                 //_logger.LogCritical(ex.Message);
                 return false;
             }
-
-            return true;
         }
 
         public async Task<ReviewUserViewModel> ReviewUser(int userID)
@@ -99,6 +95,9 @@ namespace QuoteQuiz.DataAccess.Services
 
             var resultMapped = _mapper.Map<ReviewUserViewModel>(result);
             resultMapped.UserID = userID;
+
+            var user = await _quoteQuizDbContext.Set<Users>().FirstOrDefaultAsync();
+            resultMapped.UserName = user.Name ?? null;
 
             return resultMapped;
         }

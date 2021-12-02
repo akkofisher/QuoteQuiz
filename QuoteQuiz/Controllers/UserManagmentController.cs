@@ -18,9 +18,9 @@ namespace QuoteQuiz.Controllers
         private readonly IUserManagmentService _userManagmentService;
         private readonly ILogger<UserManagmentController> _logger;
 
-        public UserManagmentController(ILogger<UserManagmentController> logger, IUserManagmentService UserManagmentService)
+        public UserManagmentController(ILogger<UserManagmentController> logger, IUserManagmentService userManagmentService)
         {
-            _userManagmentService = UserManagmentService;
+            _userManagmentService = userManagmentService;
             _logger = logger;
         }
 
