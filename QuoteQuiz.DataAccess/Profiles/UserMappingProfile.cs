@@ -21,11 +21,13 @@ namespace QuoteQuiz.DataAccess.Profiles
                 destination.Add(new UserViewModel
                 {
                     ID = item.ID,
+
+                    Email = item.Email,
                     Name = item.Name,
                     IsDisabled = item.IsDisabled,
+
                     CreateDate = item.CreateDate.ToShortDateString(),
                     CurrentMode = (ModeEnum)item.CurrentMode,
-                    Email = item.Email,
                     IsDeleted = item.IsDeleted,
                     LastModifiedDate = item.LastModifiedDate?.ToShortDateString(),
                 });

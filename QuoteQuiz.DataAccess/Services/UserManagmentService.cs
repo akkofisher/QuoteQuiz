@@ -95,8 +95,6 @@ namespace QuoteQuiz.DataAccess.Services
                 .Include(x => x.Quote)
                 .Include(x => x.Quote.Answers_Binary)
                 .Include(x => x.Quote.Answers_Multiple)
-                //.Include(x => x.User_Answers.Select(c => c.Quote.Answers_Multiple))
-                //.Include(x => x.User_Answers.Select(c => c.Quote.Answers_Binary))
                 .Where(x => x.UserID == userID).ToListAsync();
 
             var resultMapped = _mapper.Map<ReviewUserViewModel>(result);
