@@ -5,31 +5,39 @@ export class UserManagment extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { forecasts: [], loading: true };
+        this.state = { usersData: [], loading: true };
     }
 
     componentDidMount() {
         this.getUsersData();
     }
 
-    static renderForecastsTable(forecasts) {
+    static renderUsersTable(usersData) {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Current Mode</th>
+                        <th>Deleted</th>
+                        <th>Disabled</th>
+                        <th>Create Date</th>
+                        <th>Modified Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {forecasts.map(forecast =>
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
+                    {usersData.map(user =>
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.currentMode}</td>
+                            <td>{user.isDeleted}</td>
+                            <td>{user.isDisabled}</td>
+                            <td>{user.createDate}</td>
+                            <td>{user.lastModifiedDate}</td>
                         </tr>
                     )}
                 </tbody>
@@ -40,12 +48,11 @@ export class UserManagment extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : UserManagment.renderForecastsTable(this.state.forecasts);
+            : UserManagment.renderUsersTable(this.state.usersData);
 
         return (
             <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <h1 id="tabelLabel" >User Managment</h1>
                 {contents}
             </div>
         );
@@ -58,9 +65,10 @@ export class UserManagment extends Component {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
-                },            }
+                },
+            }
         );
         const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
+        this.setState({ usersData: data, loading: false });
     }
 }
