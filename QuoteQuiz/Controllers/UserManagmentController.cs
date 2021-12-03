@@ -33,14 +33,14 @@ namespace QuoteQuiz.Controllers
 
         [HttpPost]
         [Route("CreateUser")]
-        public async Task<bool> CreateUser(CreateUserModel user)
+        public async Task<bool> CreateUser([FromBody] CreateUserModel user)
         {
             return await _userManagmentService.CreateUser(user);
         }
 
         [HttpPost]
         [Route("UpdateUser")]
-        public async Task<bool> UpdateUser(UpdateUserModel user)
+        public async Task<bool> UpdateUser([FromBody] UpdateUserModel user)
         {
             return await _userManagmentService.UpdateUser(user);
         }

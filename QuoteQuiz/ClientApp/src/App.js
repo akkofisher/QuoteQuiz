@@ -4,7 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
-import { UserManagment } from './components/UserManagment';
+import { UserManagment } from './components/userManagment/UserManagment';
 
 import './custom.css'
 
