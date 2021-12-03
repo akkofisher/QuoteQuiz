@@ -27,17 +27,13 @@ namespace QuoteQuiz.DataAccess.Profiles
             destination.CreateDate = source.CreateDate.ToShortDateString();
             destination.QuoteText = source.QuoteText;
 
-            if (source.Mode == (int)ModeEnum.Binary)
-            {
-                destination.CorrectAnswer = source.Answers_Binary.CorrectAnswer;
-            }
-            else if (source.Mode == (int)ModeEnum.Multiple)
+
+            if (source.Mode == (int)ModeEnum.Multiple)
             {
                 foreach (var answer in source.Answers_Multiple)
                 {
-                    destination.UserMultiplePossibleAnswers.Add(new UserMultiplePossibleAnswerViewModel
+                    destination.QuoteMultiplePossibleAnswers.Add(new QuoteMultiplePossibleAnswerViewModel
                     {
-                        IsCorrect = answer.IsCorrect,
                         PossibleAnswerID = answer.ID,
                         PossibleAnwerText = answer.PossibleAnwerText
                     });

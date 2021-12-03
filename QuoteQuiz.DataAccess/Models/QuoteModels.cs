@@ -35,9 +35,7 @@ namespace QuoteQuiz.DataAccess.Models
     public class CreateQuoteBinaryModel
     {
         public string QuoteText { get; set; }
-        public ModeEnum Mode { get; set; }
         public bool CorrectAnswer { get; set; }
-        public bool IsDeleted { get; set; }
     }
 
     public class UpdateQuoteBinaryModel
@@ -51,8 +49,6 @@ namespace QuoteQuiz.DataAccess.Models
     public class CreateQuoteMultipleModel
     {
         public string QuoteText { get; set; }
-        public ModeEnum Mode { get; set; }
-        public bool IsDeleted { get; set; }
         public List<MultiplePossibleAnswerModel> MultiplePossibleAnswers { get; set; }
     }
 

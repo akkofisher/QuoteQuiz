@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QuoteQuiz.DataAccess.Migrations
 {
-    public partial class InitialModel : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,8 +92,8 @@ namespace QuoteQuiz.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(nullable: false),
                     QuoteID = table.Column<int>(nullable: false),
-                    UserMultipleAnswerID = table.Column<int>(nullable: false),
-                    UserBinaryAnswer = table.Column<bool>(nullable: false),
+                    UserMultipleAnswerID = table.Column<int>(nullable: true),
+                    UserBinaryAnswer = table.Column<bool>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

@@ -33,10 +33,17 @@ namespace QuoteQuiz.DataAccess.Services
 
         public async Task<UserQuoteViewModel> GetUserQuote(int userID)
         {
+            var userResult = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID);
+            if (userResult == null)
+                return null;
+
             var result = await _quoteQuizDbContext.Set<Quotes>()
-                //.Include(x=>x.User_Answers)
-                .Where(x => !x.User_Answers.Any(a => a.UserID == userID && x.Mode == a.User.CurrentMode))
-                .OrderBy(x => x.ID).FirstOrDefaultAsync();
+                .Include(m => m.Answers_Multiple)
+                .Where(x =>
+                       x.Mode == userResult.CurrentMode &&
+                       !x.User_Answers.Any(a => a.UserID == userID && x.Mode == a.User.CurrentMode && x.ID == a.QuoteID) &&
+                       !x.IsDeleted)
+                .OrderBy(o => o.ID).FirstOrDefaultAsync();
 
             return _mapper.Map<UserQuoteViewModel>(result);
         }
@@ -45,7 +52,10 @@ namespace QuoteQuiz.DataAccess.Services
         {
             try
             {
-                var result = await _quoteQuizDbContext.Set<Quotes>().FirstOrDefaultAsync(x => x.ID == answerUserQuote.QuoteID);
+                var result = await _quoteQuizDbContext.Set<Quotes>()
+                    .Include(x => x.Answers_Multiple)
+                    .Include(x => x.Answers_Binary)
+                    .FirstOrDefaultAsync(x => x.ID == answerUserQuote.QuoteID);
 
                 if (result == null)
                     return null;

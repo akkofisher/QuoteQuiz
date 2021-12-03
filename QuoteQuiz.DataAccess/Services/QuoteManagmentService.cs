@@ -63,10 +63,10 @@ namespace QuoteQuiz.DataAccess.Services
                 await _quoteQuizDbContext.Set<Quotes>().AddAsync(new Quotes
                 {
                     CreateDate = DateTime.Now,
-                    IsDeleted = Quote.IsDeleted,
+                    IsDeleted = false,
                     LastModifiedDate = DateTime.Now,
                     QuoteText = Quote.QuoteText,
-                    Mode = (int)Quote.Mode,
+                    Mode = (int)ModeEnum.Binary,
                     Answers_Binary = new Answers_Binary
                     {
                         CorrectAnswer = Quote.CorrectAnswer,
@@ -111,10 +111,10 @@ namespace QuoteQuiz.DataAccess.Services
                 await _quoteQuizDbContext.Set<Quotes>().AddAsync(new Quotes
                 {
                     CreateDate = DateTime.Now,
-                    IsDeleted = Quote.IsDeleted,
+                    IsDeleted = false,
                     LastModifiedDate = DateTime.Now,
                     QuoteText = Quote.QuoteText,
-                    Mode = (int)Quote.Mode,
+                    Mode = (int)ModeEnum.Multiple,
                     Answers_Multiple = Quote.MultiplePossibleAnswers.Select(x =>
                         new Answers_Multiple
                         {

@@ -33,6 +33,8 @@ namespace QuoteQuiz
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddTransient<IUserManagmentService, UserManagmentService>();
+            services.AddTransient<IUserQuoteService, UserQuoteService>();
+            services.AddTransient<IQuoteManagmentService, QuoteManagmentService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

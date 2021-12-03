@@ -33,35 +33,35 @@ namespace QuoteQuiz.Controllers
 
         [HttpGet]
         [Route("GetQuote")]
-        public async Task<object> GetQuote(int QuoteID)
+        public async Task<object> GetQuote([FromQuery] int QuoteID)
         {
             return await _quoteManagmentService.GetQuote(QuoteID);
         }
 
         [HttpPost]
         [Route("CreateQuoteBinary")]
-        public async Task<bool> CreateQuoteBinary(CreateQuoteBinaryModel Quote)
+        public async Task<bool> CreateQuoteBinary([FromBody] CreateQuoteBinaryModel Quote)
         {
             return await _quoteManagmentService.CreateQuoteBinary(Quote);
         }
 
         [HttpPost]
         [Route("UpdateQuoteBinary")]
-        public async Task<bool> UpdateQuoteBinary(UpdateQuoteBinaryModel Quote)
+        public async Task<bool> UpdateQuoteBinary([FromBody] UpdateQuoteBinaryModel Quote)
         {
             return await _quoteManagmentService.UpdateQuoteBinary(Quote);
         }
 
         [HttpPost]
         [Route("CreateQuoteMultiple")]
-        public async Task<bool> CreateQuoteMultiple(CreateQuoteMultipleModel Quote)
+        public async Task<bool> CreateQuoteMultiple([FromBody] CreateQuoteMultipleModel Quote)
         {
             return await _quoteManagmentService.CreateQuoteMultiple(Quote);
         }
 
         [HttpPost]
         [Route("UpdateQuoteMultiple")]
-        public async Task<bool> UpdateQuoteMultiple(UpdateQuoteMultipleModel Quote)
+        public async Task<bool> UpdateQuoteMultiple([FromBody] UpdateQuoteMultipleModel Quote)
         {
             return await _quoteManagmentService.UpdateQuoteMultiple(Quote);
         }

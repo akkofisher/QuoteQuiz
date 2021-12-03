@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react';
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export class UserManagment extends Component {
@@ -30,8 +30,8 @@ export class UserManagment extends Component {
 
         return (
             <div>
-                <h1 id="tabelLabel">User Managment</h1>
-                <>
+                <h1>User Managment</h1>
+                <Row>
                     <Button variant="primary" onClick={this.openUserCreateModal}>
                         Create User
                     </Button>
@@ -42,7 +42,7 @@ export class UserManagment extends Component {
 
                     <Modal show={this.state.isUserCreateModalOpen} onHide={this.closeUserCreateModal}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Login Form</Modal.Title>
+                            <Modal.Title>Create User Form</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <UserManagment.UserCreateForm2 onHide={() => this.createUserModel} onSubmitClick={(data) => this.createUser(data)} />
@@ -53,7 +53,7 @@ export class UserManagment extends Component {
                             </Button>
                         </Modal.Footer>
                     </Modal>
-                </>
+                </Row>
                 {contents}
             </div>
 
@@ -80,9 +80,6 @@ export class UserManagment extends Component {
                     <Form.Check type="checkbox" {...register("isDisabled")} label="Disabled" />
                 </Form.Group>
 
-                <Form.Group className="mb-3">
-                    <Form.Check type="checkbox" {...register("isDeleted")} label="Deleted" />
-                </Form.Group>
                 <Button variant="success" type="submit">
                     Create
                 </Button>
@@ -150,8 +147,8 @@ export class UserManagment extends Component {
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.currentMode}</td>
-                            <td>{user.isDeleted}</td>
-                            <td>{user.isDisabled}</td>
+                            <td>{user.isDeleted.toString()}</td>
+                            <td>{user.isDisabled.toString()}</td>
                             <td>{user.createDate}</td>
                             <td>{user.lastModifiedDate}</td>
                         </tr>
@@ -210,7 +207,7 @@ export class UserManagment extends Component {
     }
 
     async createUser(data) {
-       
+
         const response = await fetch('api/userManagment/CreateUser',
             {
                 method: 'POST',
@@ -219,7 +216,7 @@ export class UserManagment extends Component {
             }
         );
         const resultData = await response.json();
-    
+
 
         if (resultData) {
             this.getUsersData();

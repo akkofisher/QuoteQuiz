@@ -10,8 +10,8 @@ using QuoteQuiz.DataAccess.EntityFramework;
 namespace QuoteQuiz.DataAccess.Migrations
 {
     [DbContext(typeof(QuoteQuizDbContext))]
-    [Migration("20211201113728_InitialModel")]
-    partial class InitialModel
+    [Migration("20211203135220_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,13 +105,13 @@ namespace QuoteQuiz.DataAccess.Migrations
                     b.Property<int>("QuoteID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("UserBinaryAnswer")
+                    b.Property<bool?>("UserBinaryAnswer")
                         .HasColumnType("bit");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserMultipleAnswerID")
+                    b.Property<int?>("UserMultipleAnswerID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");

@@ -47,7 +47,7 @@ namespace QuoteQuiz.Controllers
 
         [HttpGet]
         [Route("ReviewUser")]
-        public async Task<ReviewUserViewModel> ReviewUser(int userID)
+        public async Task<ReviewUserViewModel> ReviewUser([FromQuery] int userID)
         {
             return await _userManagmentService.ReviewUser(userID);
         }

@@ -103,13 +103,13 @@ namespace QuoteQuiz.DataAccess.Migrations
                     b.Property<int>("QuoteID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("UserBinaryAnswer")
+                    b.Property<bool?>("UserBinaryAnswer")
                         .HasColumnType("bit");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserMultipleAnswerID")
+                    b.Property<int?>("UserMultipleAnswerID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");

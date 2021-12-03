@@ -47,7 +47,7 @@ namespace QuoteQuiz.DataAccess.Services
                     CreateDate = DateTime.Now,
                     CurrentMode = (int)user.CurrentMode,
                     Email = user.Email,
-                    IsDeleted = user.IsDeleted,
+                    IsDeleted = false,
                     IsDisabled = user.IsDisabled,
                     Name = user.Name,
                 });

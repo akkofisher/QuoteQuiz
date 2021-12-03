@@ -25,7 +25,6 @@ namespace QuoteQuiz.DataAccess.Models
         public string Name { get; set; }
         public ModeEnum CurrentMode { get; set; }
         public bool IsDisabled { get; set; }
-        public bool IsDeleted { get; set; }
     }
 
     public class UpdateUserModel
