@@ -28,7 +28,6 @@ namespace QuoteQuiz.DataAccess.Models
 
     public class AnswerUserQuoteModel
     {
-        public int UserID { get; set; }
         public int QuoteID { get; set; }
         public bool? UserCorrectAnswer { get; set; }
         public int? UserMultipleAnswerID { get; set; }

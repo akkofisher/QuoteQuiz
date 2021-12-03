@@ -95,7 +95,7 @@ namespace QuoteQuiz.DataAccess.Profiles
 
             var totalCorrectAnswers = destination.UserBinaryAnswers.Count(x => x.IsCorrectAnswered) + destination.UserMultipleAnswers.Count(x => x.IsCorrectAnswered);
             destination.TotalUserAnsweredQuestions = source.Count;
-         
+
             if (totalCorrectAnswers != 0 && destination.TotalUserAnsweredQuestions != 0)
                 destination.UserCorrectAnswerPercentage = totalCorrectAnswers / (decimal)destination.TotalUserAnsweredQuestions * 100;
         }

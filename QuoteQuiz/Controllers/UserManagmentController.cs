@@ -1,27 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QuoteQuiz.DataAccess.Models;
 using QuoteQuiz.DataAccess.Services;
+using QuoteQuiz.Web.Controllers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuoteQuiz.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserManagmentController : ControllerBase
+    public class UserManagmentController : BaseController
     {
 
         private readonly IUserManagmentService _userManagmentService;
-        private readonly ILogger<UserManagmentController> _logger;
 
         public UserManagmentController(ILogger<UserManagmentController> logger, IUserManagmentService userManagmentService)
+            : base(logger)
         {
             _userManagmentService = userManagmentService;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -29,6 +32,33 @@ namespace QuoteQuiz.Controllers
         public async Task<IEnumerable> GetUsers()
         {
             return await _userManagmentService.GetUsers();
+        }
+
+        [HttpPost]
+        [Route("UserSimpleAuth")]
+        public async Task<IActionResult> UserSimpleAuth([FromBody] int userID)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var result = await _userManagmentService.GetUser(userID);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            var claims = new List<Claim>
+            {
+              new Claim(ClaimTypes.NameIdentifier, result.ID.ToString()),
+              new Claim(ClaimTypes.Name, result.Name),
+            };
+
+            ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            return Ok(true);
         }
 
         [HttpPost]

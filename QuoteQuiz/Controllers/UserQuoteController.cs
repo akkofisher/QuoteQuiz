@@ -1,35 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QuoteQuiz.DataAccess.Models;
 using QuoteQuiz.DataAccess.Models.Enums;
 using QuoteQuiz.DataAccess.Services;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using QuoteQuiz.Web.Controllers;
 using System.Threading.Tasks;
 
 namespace QuoteQuiz.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserQuoteController : ControllerBase
+    public class UserQuoteController : BaseController
     {
 
         private readonly IUserQuoteService _userQuoteService;
-        private readonly ILogger<UserQuoteController> _logger;
 
         public UserQuoteController(ILogger<UserQuoteController> logger, IUserQuoteService userQuoteService)
+            : base(logger)
         {
             _userQuoteService = userQuoteService;
-            _logger = logger;
         }
 
         [HttpGet]
         [Route("GetUserQuote")]
-        public async Task<IActionResult> GetUserQuote([FromQuery] int userID)
+        public async Task<IActionResult> GetUserQuote()
         {
-            var result = await _userQuoteService.GetUserQuote(userID);
+            var result = await _userQuoteService.GetUserQuote(CurrentUserID);
 
             if (result == null)
             {
@@ -40,18 +38,17 @@ namespace QuoteQuiz.Controllers
 
         [HttpGet]
         [Route("UpdateUserMode")]
-        public async Task<bool> UpdateUserMode([FromQuery] int userID, [FromQuery] ModeEnum userMode)
+        public async Task<bool> UpdateUserMode([FromQuery] ModeEnum userMode)
         {
-            return await _userQuoteService.UpdateUserMode(userID, userMode);
+            return await _userQuoteService.UpdateUserMode(CurrentUserID, userMode);
         }
 
         [HttpPost]
         [Route("AnswerUserQuote")]
         public async Task<AnswerResultUserQuoteViewModel> AnswerUserQuote([FromBody] AnswerUserQuoteModel answerUserQuote)
         {
-            return await _userQuoteService.AnswerUserQuote(answerUserQuote);
+            return await _userQuoteService.AnswerUserQuote(CurrentUserID, answerUserQuote);
         }
-
 
     }
 }

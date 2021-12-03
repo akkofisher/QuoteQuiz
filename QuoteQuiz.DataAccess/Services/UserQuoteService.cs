@@ -18,7 +18,7 @@ namespace QuoteQuiz.DataAccess.Services
     {
         Task<UserQuoteViewModel> GetUserQuote(int userID);
         Task<bool> UpdateUserMode(int userID, ModeEnum userMode);
-        Task<AnswerResultUserQuoteViewModel> AnswerUserQuote(AnswerUserQuoteModel answerUserQuote);
+        Task<AnswerResultUserQuoteViewModel> AnswerUserQuote(int userID, AnswerUserQuoteModel answerUserQuote);
     }
 
     public class UserQuoteService : BaseService, IUserQuoteService
@@ -48,7 +48,7 @@ namespace QuoteQuiz.DataAccess.Services
             return _mapper.Map<UserQuoteViewModel>(result);
         }
 
-        public async Task<AnswerResultUserQuoteViewModel> AnswerUserQuote(AnswerUserQuoteModel answerUserQuote)
+        public async Task<AnswerResultUserQuoteViewModel> AnswerUserQuote(int userID, AnswerUserQuoteModel answerUserQuote)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace QuoteQuiz.DataAccess.Services
 
                 AnswerResultUserQuoteViewModel data = new AnswerResultUserQuoteViewModel()
                 {
-                    UserID = answerUserQuote.UserID,
+                    UserID = userID,
                     QuoteID = answerUserQuote.QuoteID,
                 };
 
@@ -73,7 +73,7 @@ namespace QuoteQuiz.DataAccess.Services
                         {
                             CreateDate = DateTime.Now,
                             QuoteID = answerUserQuote.QuoteID,
-                            UserID = answerUserQuote.UserID,
+                            UserID = userID,
                             UserBinaryAnswer = answerUserQuote.UserCorrectAnswer
                         });
                     data.IsCorrectAnswered = result.Answers_Binary.CorrectAnswer == answerUserQuote.UserCorrectAnswer;
@@ -85,7 +85,7 @@ namespace QuoteQuiz.DataAccess.Services
                         {
                             CreateDate = DateTime.Now,
                             QuoteID = answerUserQuote.QuoteID,
-                            UserID = answerUserQuote.UserID,
+                            UserID = userID,
                             UserMultipleAnswerID = answerUserQuote.UserMultipleAnswerID
                         });
                     data.IsCorrectAnswered = result.Answers_Multiple.Any(x => x.IsCorrect && x.ID == answerUserQuote.UserMultipleAnswerID);

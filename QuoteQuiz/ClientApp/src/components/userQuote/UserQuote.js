@@ -121,7 +121,6 @@ export class UserQuote extends Component {
                     </Form>
                 </Card.Body>
             </Card>
-
         );
     }
 
@@ -157,26 +156,10 @@ export class UserQuote extends Component {
         );
     }
 
-
-    async getUsersData() {
-        const response = await fetch('api/UserManagment/GetUsers',
-            {
-                method: "GET",
-                headers: { 'Content-Type': 'application/json' },
-            }
-        );
-        const resultData = await response.json();
-        if (resultData) {
-            this.setState({ usersData: resultData, loading: false });
-        } else {
-            this.setState({ showNoQuotes: true, loading: false });
-        }
-    }
-
     async getUserQuote(data) {
         this.setState({ loading: true });
 
-        const response = await fetch('api/UserQuote/GetUserQuote?userID=' + data.userID,
+        const response = await fetch('api/UserQuote/GetUserQuote?',
             {
                 method: "GET",
                 headers: { 'Content-Type': 'application/json' },
@@ -192,7 +175,6 @@ export class UserQuote extends Component {
     }
 
     async answerUserQuote(data) {
-        data.userID = 1;
 
         this.setState({ loading: true });
         const response = await fetch('api/UserQuote/AnswerUserQuote',

@@ -10,6 +10,7 @@ using QuoteQuiz.DataAccess.Services;
 using AutoMapper;
 using System.Reflection;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace QuoteQuiz
 {
@@ -25,6 +26,14 @@ namespace QuoteQuiz
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.SlidingExpiration = true;
+                });
+
             services.AddControllersWithViews();
 
             services.AddDbContext<QuoteQuizDbContext>(options =>
@@ -61,9 +70,10 @@ namespace QuoteQuiz
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-        
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 

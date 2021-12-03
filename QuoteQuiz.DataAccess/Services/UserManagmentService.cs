@@ -19,6 +19,7 @@ namespace QuoteQuiz.DataAccess.Services
         Task<bool> CreateUser(CreateUserModel user);
         Task<bool> UpdateUser(UpdateUserModel user);
         Task<ReviewUserViewModel> ReviewUser(int userID);
+        Task<UserViewModel> GetUser(int userID);
     }
 
     public class UserManagmentService : BaseService, IUserManagmentService
@@ -36,6 +37,13 @@ namespace QuoteQuiz.DataAccess.Services
             var result = await _quoteQuizDbContext.Set<Users>().ToListAsync();
 
             return _mapper.Map<List<UserViewModel>>(result);
+        }
+
+        public async Task<UserViewModel> GetUser(int userID)
+        {
+            var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID);
+
+            return _mapper.Map<UserViewModel>(result);
         }
 
         public async Task<bool> CreateUser(CreateUserModel user)

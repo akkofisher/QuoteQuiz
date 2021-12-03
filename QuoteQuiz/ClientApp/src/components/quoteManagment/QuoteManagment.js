@@ -42,20 +42,19 @@ export class QuoteManagment extends Component {
         return (
             <div>
                 <h1>Quote Managment</h1>
+                <Row md={4}>
+                    <Col>
+                        <Button variant="primary" onClick={this.openQuoteBinaryCreateModal} style={{ width: '18rem' }}>
+                            Create Binary Quote
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button variant="primary" onClick={this.openQuoteMultipleCreateModal} style={{ width: '18rem' }}>
+                            Create Multiple Quote
+                        </Button>
+                    </Col>
+                </Row>
                 <Row>
-                    <Row md={4}>
-                        <Col>
-                            <Button variant="primary" onClick={this.openQuoteBinaryCreateModal}>
-                                Create Binary Quote
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button variant="primary" onClick={this.openQuoteMultipleCreateModal}>
-                                Create Multiple Quote
-                            </Button>
-                        </Col>
-                    </Row>
-
                     <Modal show={this.state.isQuoteCreateModalOpen} onHide={this.closeQuoteCreateModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Create Quote Form</Modal.Title>
@@ -70,6 +69,7 @@ export class QuoteManagment extends Component {
                         </Modal.Footer>
                     </Modal>
                 </Row>
+
                 {contents}
             </div>
 
@@ -181,8 +181,7 @@ export class QuoteManagment extends Component {
                 {...props}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
+                centered>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Create Quote

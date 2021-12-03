@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using QuoteQuiz.DataAccess.Models;
 using QuoteQuiz.DataAccess.Services;
+using QuoteQuiz.Web.Controllers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,16 +13,15 @@ namespace QuoteQuiz.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class QuoteManagmentController : ControllerBase
+    public class QuoteManagmentController : BaseController
     {
 
         private readonly IQuoteManagmentService _quoteManagmentService;
-        private readonly ILogger<QuoteManagmentController> _logger;
 
         public QuoteManagmentController(ILogger<QuoteManagmentController> logger, IQuoteManagmentService quoteManagmentService)
+            : base(logger)
         {
             _quoteManagmentService = quoteManagmentService;
-            _logger = logger;
         }
 
         [HttpGet]

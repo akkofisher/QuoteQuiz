@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react';
-import { Modal, Button, Form, Row } from "react-bootstrap";
+import React, { Component } from 'react';
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export class UserManagment extends Component {
@@ -10,8 +10,6 @@ export class UserManagment extends Component {
 
     openUserCreateModal = () => this.setState({ isUserCreateModalOpen: true });
     closeUserCreateModal = () => this.setState({ isUserCreateModalOpen: false });
-
-    createUserModel = { name: "wow" };
 
     constructor(props) {
         super(props);
@@ -31,17 +29,20 @@ export class UserManagment extends Component {
         return (
             <div>
                 <h1>User Managment</h1>
+                <Row md={4}>
+                    <Col>
+                        <Button variant="primary" onClick={this.openUserCreateModal} style={{ width: '18rem' }}>
+                            Create User
+                        </Button>
+                    </Col>
+                </Row>
                 <Row>
-                    <Button variant="primary" onClick={this.openUserCreateModal}>
-                        Create User
-                    </Button>
-                  
                     <Modal show={this.state.isUserCreateModalOpen} onHide={this.closeUserCreateModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Create User Form</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <UserManagment.UserCreateForm2 onSubmitClick={(data) => this.createUser(data)} />
+                            <UserManagment.UserCreateForm onSubmitClick={(data) => this.createUser(data)} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={this.closeUserCreateModal}>
@@ -50,13 +51,14 @@ export class UserManagment extends Component {
                         </Modal.Footer>
                     </Modal>
                 </Row>
+
                 {contents}
             </div>
 
         );
     }
 
-    static UserCreateForm2 = (props) => {
+    static UserCreateForm = (props) => {
         const { register, handleSubmit } = useForm();
         const onSubmit = (data) => {
             data.currentMode = parseInt(data.currentMode); // convert string to number (mode enum)
@@ -83,42 +85,6 @@ export class UserManagment extends Component {
         );
     };
 
-    static UserCreateForm = ({ onSubmit }) => {
-        const [name, setName] = useState("");
-        const [email, setEmail] = useState("");
-        return (
-            <Form onSubmit={onSubmit}>
-                <Form.Group controlId="formBasicName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        type="name"
-                        placeholder="Enter name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Form.Group>
-
-
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Remember Me!" />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                    Login
-                </Button>
-            </Form>
-        );
-    };
 
     static renderUsersTable(usersData) {
 
@@ -171,8 +137,8 @@ export class UserManagment extends Component {
                 {...props}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
+                centered>
+
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Create User
