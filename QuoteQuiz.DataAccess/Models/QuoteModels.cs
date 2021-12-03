@@ -49,6 +49,7 @@ namespace QuoteQuiz.DataAccess.Models
     public class CreateQuoteMultipleModel
     {
         public string QuoteText { get; set; }
+        public int CorrectAnswerID { get; set; }
         public List<MultiplePossibleAnswerModel> MultiplePossibleAnswers { get; set; }
     }
 
@@ -56,6 +57,7 @@ namespace QuoteQuiz.DataAccess.Models
     {
         public int QuoteID { get; set; }
         public string QuoteText { get; set; }
+        public int CorrectAnswerID { get; set; }
         public bool IsDeleted { get; set; }
         public List<MultiplePossibleAnswerModel> MultiplePossibleAnswers { get; set; }
     }
@@ -64,7 +66,6 @@ namespace QuoteQuiz.DataAccess.Models
     {
         public int PossibleAnswerID { get; set; }
         public string PossibleAnwerText { get; set; }
-        public bool IsCorrect { get; set; }
     }
 
 }

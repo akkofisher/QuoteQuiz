@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Row } from "react-bootstrap";
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 export class QuoteManagment extends Component {
     static displayName = QuoteManagment.name;
     state = {
         isQuoteCreateModalOpen: false,
+        creatQuoteMode: null,
     };
 
-    openQuoteCreateModal = () => this.setState({ isQuoteCreateModalOpen: true });
-    closeQuoteCreateModal = () => this.setState({ isQuoteCreateModalOpen: false });
+    openQuoteBinaryCreateModal = () => this.setState({ isQuoteCreateModalOpen: true, creatQuoteMode: "Binary" });
+    openQuoteMultipleCreateModal = () => this.setState({ isQuoteCreateModalOpen: true, creatQuoteMode: "Multiple" });
 
-    createQuoteModel = { name: "wow" };
+    closeQuoteCreateModal = () => this.setState({ isQuoteCreateModalOpen: false });
 
     constructor(props) {
         super(props);
@@ -28,20 +29,39 @@ export class QuoteManagment extends Component {
             ? <p><em>Loading...</em></p>
             : QuoteManagment.renderQuotesTable(this.state.quotesData);
 
+        const renderQuoteForm = () => {
+            if (this.state.creatQuoteMode === "Binary") {
+                return <QuoteManagment.QuoteBinaryCreateModal onSubmitClick={(data) => this.createQuote(data)} />;
+            } else if (this.state.creatQuoteMode === "Multiple") {
+                return <QuoteManagment.QuoteMultipleCreateModal onSubmitClick={(data) => this.createQuote(data)} />;
+            } else {
+                return <></>;
+            }
+        }
+
         return (
             <div>
                 <h1>Quote Managment</h1>
                 <Row>
-                    <Button variant="primary" onClick={this.openQuoteCreateModal}>
-                        Create Quote
-                    </Button>
+                    <Row md={4}>
+                        <Col>
+                            <Button variant="primary" onClick={this.openQuoteBinaryCreateModal}>
+                                Create Binary Quote
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button variant="primary" onClick={this.openQuoteMultipleCreateModal}>
+                                Create Multiple Quote
+                            </Button>
+                        </Col>
+                    </Row>
 
                     <Modal show={this.state.isQuoteCreateModalOpen} onHide={this.closeQuoteCreateModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Create Quote Form</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <QuoteManagment.QuoteCreateForm onHide={() => this.createQuoteModel} onSubmitClick={(data) => this.createQuote(data)} />
+                            {renderQuoteForm()}
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={this.closeQuoteCreateModal}>
@@ -56,50 +76,54 @@ export class QuoteManagment extends Component {
         );
     }
 
-    static QuoteCreateForm = (props) => {
+    static QuoteBinaryCreateModal = (props) => {
         const { register, handleSubmit } = useForm();
         const onSubmit = (data) => {
-            data.mode = parseInt(data.mode); // convert string to number (mode enum)
+            data.mode = 1;
             props.onSubmitClick(data)
         };
-
-        let showModeElementsContent = <>123</>;
-
-        const changeMode = (mode) => {
-            
-            if (mode === "Binary") {
-                console.log(mode)
-                showModeElementsContent = (
-                    <div>
-                        Binary
-                    </div>
-                );
-            } else if (mode === "Multiple") {
-                console.log(mode)
-                showModeElementsContent = (
-                    <div>
-                        Multiple
-                    </div>
-                );
-            }
-        }
 
         return (
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Control {...register("quoteText", { required: true })} placeholder="Quote text" />
 
                 <Form.Group className="mb-3">
-                    <Form.Check type="radio" {...register("mode", { requared: true })} label="Binary" onChange={() => changeMode('Binary')} />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Check type="radio" {...register("mode", { requared: true })} label="Multiple" onChange={() => changeMode('Multiple')} />
-                </Form.Group>
-
-                {showModeElementsContent}
-
-                <Form.Group className="mb-3">
                     <Form.Check type="checkbox" {...register("CorrectAnswer")} label="Is This Answer Correct?" />
+                </Form.Group>
+
+                <Button variant="success" type="submit">
+                    Create
+                </Button>
+            </Form>
+        );
+
+    };
+
+    static QuoteMultipleCreateModal = (props) => {
+        const { register, handleSubmit } = useForm();
+        const onSubmit = (data) => {
+            data.mode = 2;
+            data.CorrectAnswerID = parseInt(data.CorrectAnswerID);
+            props.onSubmitClick(data)
+        };
+
+        return (
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Control {...register("quoteText", { required: true })} placeholder="Quote text" />
+
+                <Form.Control {...register("MultiplePossibleAnswers.0.PossibleAnwerText", { required: true })} placeholder="Possible Answer Text A" />
+                <Form.Group className="mb-3">
+                    <Form.Check type="radio" value="1" {...register("CorrectAnswerID", { required: true })} label="Is This Answer Correct?" />
+                </Form.Group>
+
+                <Form.Control {...register("MultiplePossibleAnswers.1.PossibleAnwerText", { required: true })} placeholder="Possible Answer Text B" />
+                <Form.Group className="mb-3">
+                    <Form.Check type="radio" value="2" {...register("CorrectAnswerID", { required: true })} label="Is This Answer Correct?" />
+                </Form.Group>
+
+                <Form.Control {...register("MultiplePossibleAnswers.2.PossibleAnwerText", { required: true })} placeholder="Possible Answer Text C" />
+                <Form.Group className="mb-3">
+                    <Form.Check type="radio" value="3" {...register("CorrectAnswerID", { required: true })} label="Is This Answer Correct?" />
                 </Form.Group>
 
                 <Button variant="success" type="submit">
@@ -141,7 +165,7 @@ export class QuoteManagment extends Component {
         );
     }
 
-    static QuoteCreateModal(props) {
+    static QuoteBinaryCreateModal(props) {
         let state = {
             name: "namea",
             email: "",
@@ -189,16 +213,27 @@ export class QuoteManagment extends Component {
     }
 
     async createQuote(data) {
+        let resultData = null;
 
-        const response = await fetch('api/quoteManagment/CreateQuoteBinary',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }
-        );
-        const resultData = await response.json();
-
+        if (data.mode === 1) {
+            const response = await fetch('api/quoteManagment/CreateQuoteBinary',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }
+            );
+            resultData = await response.json()
+        } else if (data.mode === 2) {
+            const response = await fetch('api/quoteManagment/CreateQuoteMultiple',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }
+            );
+            resultData = await response.json()
+        }
 
         if (resultData) {
             this.getQuotesData();

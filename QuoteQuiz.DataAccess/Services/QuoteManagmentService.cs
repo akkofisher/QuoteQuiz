@@ -108,20 +108,29 @@ namespace QuoteQuiz.DataAccess.Services
         {
             try
             {
-                await _quoteQuizDbContext.Set<Quotes>().AddAsync(new Quotes
+                var quoteQuiz = new Quotes
                 {
                     CreateDate = DateTime.Now,
                     IsDeleted = false,
                     LastModifiedDate = DateTime.Now,
                     QuoteText = Quote.QuoteText,
                     Mode = (int)ModeEnum.Multiple,
-                    Answers_Multiple = Quote.MultiplePossibleAnswers.Select(x =>
-                        new Answers_Multiple
-                        {
-                            IsCorrect = x.IsCorrect,
-                            PossibleAnwerText = x.PossibleAnwerText
-                        }).ToList()
-                });
+
+                };
+
+                var possibleAnswerIndex = 1;
+                foreach (var answer in Quote.MultiplePossibleAnswers)
+                {
+                    quoteQuiz.Answers_Multiple.Add(
+                       new Answers_Multiple
+                       {
+                           IsCorrect = possibleAnswerIndex == Quote.CorrectAnswerID,
+                           PossibleAnwerText = answer.PossibleAnwerText
+                       });
+                    possibleAnswerIndex++;
+                }
+
+                await _quoteQuizDbContext.Set<Quotes>().AddAsync(quoteQuiz);
 
                 _quoteQuizDbContext.SaveChanges();
                 return true;
@@ -142,10 +151,12 @@ namespace QuoteQuiz.DataAccess.Services
                 result.LastModifiedDate = DateTime.Now;
                 result.IsDeleted = Quote.IsDeleted;
 
+                var possibleAnswerIndex = 1;
                 foreach (var answer in result.Answers_Multiple)
                 {
-                    answer.IsCorrect = Quote.MultiplePossibleAnswers.FirstOrDefault(x => x.PossibleAnswerID == answer.ID).IsCorrect;
+                    answer.IsCorrect = possibleAnswerIndex == Quote.CorrectAnswerID;
                     answer.PossibleAnwerText = Quote.MultiplePossibleAnswers.FirstOrDefault(x => x.PossibleAnswerID == answer.ID).PossibleAnwerText;
+                    possibleAnswerIndex++;
                 }
 
                 _quoteQuizDbContext.SaveChanges();

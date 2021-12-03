@@ -35,17 +35,13 @@ export class UserManagment extends Component {
                     <Button variant="primary" onClick={this.openUserCreateModal}>
                         Create User
                     </Button>
-
-                    {/* <UserManagment.UserCreateModal
-                        show={this.state.isUserCreateModalOpen} onHide={this.closeUserCreateModal}
-                    /> */}
-
+                  
                     <Modal show={this.state.isUserCreateModalOpen} onHide={this.closeUserCreateModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Create User Form</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <UserManagment.UserCreateForm2 onHide={() => this.createUserModel} onSubmitClick={(data) => this.createUser(data)} />
+                            <UserManagment.UserCreateForm2 onSubmitClick={(data) => this.createUser(data)} />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={this.closeUserCreateModal}>
