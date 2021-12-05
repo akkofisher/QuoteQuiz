@@ -23,10 +23,6 @@ export class UserQuote extends Component {
 
     render() {
 
-        // let contents = this.state.loading
-        //     ? <p><em>Loading...</em></p>
-        //     : UserQuote.renderUsersTable(this.state.usersData);
-
         let userQuoteContent = this.state.loading
             ? <p><em>Loading...</em></p>
             : (!this.state.showAnswer && !this.state.showNoQuotes ? this.renderUserQuoteCard(this.state.userQuoteData) : null);

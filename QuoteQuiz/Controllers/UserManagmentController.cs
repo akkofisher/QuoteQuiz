@@ -34,6 +34,15 @@ namespace QuoteQuiz.Controllers
             return await _userManagmentService.GetUsers();
         }
 
+        [HttpGet]
+        [Route("UserLogOut")]
+        public async Task<IActionResult> UserLogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return Ok(true);
+        }
+
         [HttpPost]
         [Route("UserSimpleAuth")]
         public async Task<IActionResult> UserSimpleAuth([FromBody] int userID)
@@ -59,6 +68,19 @@ namespace QuoteQuiz.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             return Ok(true);
+        }
+
+        [HttpGet]
+        [Route("GetUserAuthInfo")]
+        public async Task<IActionResult> GetUserAuthInfo()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var result = await _userManagmentService.GetUser(CurrentUserID);
+                return Ok(result);
+            }
+
+            return Ok(false);
         }
 
         [HttpPost]

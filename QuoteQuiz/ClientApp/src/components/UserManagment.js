@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
 
 export class UserManagment extends Component {
     static displayName = UserManagment.name;
@@ -181,8 +182,11 @@ export class UserManagment extends Component {
 
 
         if (resultData) {
+            toast.success('Successfully changed!');
             this.getUsersData();
             this.closeUserCreateModal();
+        }else{
+            toast.error('This is an error!');
         }
 
     }

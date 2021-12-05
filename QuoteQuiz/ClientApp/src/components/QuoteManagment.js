@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
 
 export class QuoteManagment extends Component {
     static displayName = QuoteManagment.name;
@@ -237,7 +238,11 @@ export class QuoteManagment extends Component {
         if (resultData) {
             this.getQuotesData();
             this.closeQuoteCreateModal();
+            toast.success('Successfully quote added!');
+        }else{
+            toast.error('This is an error!');
         }
+
 
     }
 
