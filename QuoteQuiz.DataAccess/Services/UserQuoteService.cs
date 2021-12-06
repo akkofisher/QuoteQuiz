@@ -33,7 +33,7 @@ namespace QuoteQuiz.DataAccess.Services
 
         public async Task<UserQuoteViewModel> GetUserQuote(int userID)
         {
-            var userResult = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID);
+            var userResult = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID && !x.IsDeleted);
             if (userResult == null)
                 return null;
 
@@ -55,7 +55,7 @@ namespace QuoteQuiz.DataAccess.Services
                 var result = await _quoteQuizDbContext.Set<Quotes>()
                     .Include(x => x.Answers_Multiple)
                     .Include(x => x.Answers_Binary)
-                    .FirstOrDefaultAsync(x => x.ID == answerUserQuote.QuoteID);
+                    .FirstOrDefaultAsync(x => x.ID == answerUserQuote.QuoteID && !x.IsDeleted);
 
                 if (result == null)
                     return null;
@@ -107,7 +107,7 @@ namespace QuoteQuiz.DataAccess.Services
         {
             try
             {
-                var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID);
+                var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID && !x.IsDeleted);
 
                 result.LastModifiedDate = DateTime.Now;
                 result.CurrentMode = (int)userMode;

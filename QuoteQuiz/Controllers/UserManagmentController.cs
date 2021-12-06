@@ -51,7 +51,7 @@ namespace QuoteQuiz.Controllers
 
             var result = await _userManagmentService.GetUser(userID);
 
-            if (result == null)
+            if (result == null && !result.IsDisabled)
             {
                 return NotFound();
             }

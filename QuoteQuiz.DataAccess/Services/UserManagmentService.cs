@@ -41,7 +41,7 @@ namespace QuoteQuiz.DataAccess.Services
 
         public async Task<UserViewModel> GetUser(int userID)
         {
-            var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID);
+            var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == userID && !x.IsDeleted);
 
             return _mapper.Map<UserViewModel>(result);
         }
@@ -74,11 +74,11 @@ namespace QuoteQuiz.DataAccess.Services
         {
             try
             {
-                var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == user.UserID);
+                var result = await _quoteQuizDbContext.Set<Users>().FirstAsync(x => x.ID == user.UserID && !x.IsDeleted);
 
                 result.LastModifiedDate = DateTime.Now;
                 result.CurrentMode = (int)user.CurrentMode;
-                result.IsDeleted = user.IsDeleted;
+                result.IsDeleted = false;
                 result.IsDisabled = user.IsDisabled;
                 result.Name = user.Name;
                 result.Email = user.Email;

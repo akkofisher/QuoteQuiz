@@ -36,7 +36,7 @@ namespace QuoteQuiz.DataAccess.Services
 
         public async Task<List<QuoteViewModel>> GetQuotes()
         {
-            var result = await _quoteQuizDbContext.Set<Quotes>().ToListAsync();
+            var result = await _quoteQuizDbContext.Set<Quotes>().Where(x => !x.IsDeleted).ToListAsync();
 
             return _mapper.Map<List<QuoteViewModel>>(result);
         }
@@ -46,7 +46,7 @@ namespace QuoteQuiz.DataAccess.Services
             var result = await _quoteQuizDbContext.Set<Quotes>()
                 .Include(x => x.Answers_Binary)
                 .Include(x => x.Answers_Multiple)
-                .FirstOrDefaultAsync(x => x.ID == QuoteID);
+                .FirstOrDefaultAsync(x => x.ID == QuoteID && !x.IsDeleted);
 
             if (result.Mode == (int)ModeEnum.Binary)
                 return _mapper.Map<QuoteBinaryViewModel>(result.Answers_Binary);
@@ -87,10 +87,10 @@ namespace QuoteQuiz.DataAccess.Services
         {
             try
             {
-                var result = await _quoteQuizDbContext.Set<Quotes>().FirstAsync(x => x.ID == Quote.QuoteID);
+                var result = await _quoteQuizDbContext.Set<Quotes>().FirstAsync(x => x.ID == Quote.QuoteID && !x.IsDeleted);
 
                 result.LastModifiedDate = DateTime.Now;
-                result.IsDeleted = Quote.IsDeleted;
+                result.IsDeleted = false;
                 result.QuoteText = Quote.QuoteText;
                 result.Answers_Binary.CorrectAnswer = Quote.CorrectAnswer;
 
@@ -146,10 +146,10 @@ namespace QuoteQuiz.DataAccess.Services
         {
             try
             {
-                var result = await _quoteQuizDbContext.Set<Quotes>().FirstAsync(x => x.ID == Quote.QuoteID);
+                var result = await _quoteQuizDbContext.Set<Quotes>().FirstAsync(x => x.ID == Quote.QuoteID && !x.IsDeleted);
 
                 result.LastModifiedDate = DateTime.Now;
-                result.IsDeleted = Quote.IsDeleted;
+                result.IsDeleted = false;
 
                 var possibleAnswerIndex = 1;
                 foreach (var answer in result.Answers_Multiple)

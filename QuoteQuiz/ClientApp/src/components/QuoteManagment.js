@@ -144,7 +144,6 @@ export class QuoteManagment extends Component {
                         <th>ID</th>
                         <th>quoteText</th>
                         <th>Current Mode</th>
-                        <th>Deleted</th>
                         <th>Create Date</th>
                         <th>Modified Date</th>
                     </tr>
@@ -155,7 +154,6 @@ export class QuoteManagment extends Component {
                             <td>{quote.id}</td>
                             <td>{quote.quoteText}</td>
                             <td>{quote.mode}</td>
-                            <td>{quote.isDeleted.toString()}</td>
                             <td>{quote.createDate}</td>
                             <td>{quote.lastModifiedDate}</td>
                         </tr>
@@ -171,7 +169,6 @@ export class QuoteManagment extends Component {
             name: "namea",
             email: "",
             currentMode: 1,
-            isDeleted: false,
             isDisabled: false,
         }
 

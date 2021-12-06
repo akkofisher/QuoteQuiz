@@ -38,7 +38,6 @@ namespace QuoteQuiz.DataAccess.Profiles
                     QuoteText = item.QuoteText,
 
                     CreateDate = item.CreateDate.ToShortDateString(),
-                    IsDeleted = item.IsDeleted,
                     LastModifiedDate = item.LastModifiedDate?.ToShortDateString(),
                 });
             }

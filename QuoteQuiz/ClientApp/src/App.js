@@ -6,7 +6,7 @@ import { UserManagment } from './components/UserManagment';
 import { QuoteManagment } from './components/QuoteManagment';
 import { UserQuote } from './components/UserQuote';
 import { UserAuthSettings } from './components/UserAuthSettings';
-import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
+// import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import { Toaster } from 'react-hot-toast';
 
 import './custom.css'

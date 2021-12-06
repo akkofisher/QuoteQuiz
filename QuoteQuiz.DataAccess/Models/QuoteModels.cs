@@ -11,7 +11,6 @@ namespace QuoteQuiz.DataAccess.Models
 
         public string CreateDate { get; set; }
         public string LastModifiedDate { get; set; }
-        public bool IsDeleted { get; set; }
 
         public string QuoteText { get; set; }
         public ModeEnum Mode { get; set; }
@@ -43,7 +42,6 @@ namespace QuoteQuiz.DataAccess.Models
         public int QuoteID { get; set; }
         public string QuoteText { get; set; }
         public bool CorrectAnswer { get; set; }
-        public bool IsDeleted { get; set; }
     }
 
     public class CreateQuoteMultipleModel
@@ -58,7 +56,6 @@ namespace QuoteQuiz.DataAccess.Models
         public int QuoteID { get; set; }
         public string QuoteText { get; set; }
         public int CorrectAnswerID { get; set; }
-        public bool IsDeleted { get; set; }
         public List<MultiplePossibleAnswerModel> MultiplePossibleAnswers { get; set; }
     }
 

@@ -39,7 +39,6 @@ namespace QuoteQuiz.DataAccess.Profiles
 
                     CreateDate = item.CreateDate.ToShortDateString(),
                     CurrentMode = (ModeEnum)item.CurrentMode,
-                    IsDeleted = item.IsDeleted,
                     LastModifiedDate = item.LastModifiedDate?.ToShortDateString(),
                 });
             }
@@ -53,7 +52,6 @@ namespace QuoteQuiz.DataAccess.Profiles
             destination.CreateDate = source.CreateDate.ToShortDateString();
             destination.CurrentMode = (ModeEnum)source.CurrentMode;
             destination.Email = source.Email;
-            destination.IsDeleted = source.IsDeleted;
             destination.LastModifiedDate = source.LastModifiedDate?.ToShortDateString();
         }
 
@@ -97,7 +95,7 @@ namespace QuoteQuiz.DataAccess.Profiles
             destination.TotalUserAnsweredQuestions = source.Count;
 
             if (totalCorrectAnswers != 0 && destination.TotalUserAnsweredQuestions != 0)
-                destination.UserCorrectAnswerPercentage = totalCorrectAnswers / (decimal)destination.TotalUserAnsweredQuestions * 100;
+                destination.UserCorrectAnswerPercentage = (totalCorrectAnswers / (decimal)destination.TotalUserAnsweredQuestions * 100).ToString("0");
         }
 
     }
